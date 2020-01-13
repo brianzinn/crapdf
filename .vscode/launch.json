@@ -1,0 +1,39 @@
+{
+    // The "client browser" needs to attach to a running "npm start --prefix client" 
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch CRA Web Server",
+            "envFile": "${workspaceFolder}/.env",
+            "runtimeExecutable": "npm",
+            "cwd": "${workspaceFolder}",
+            "runtimeArgs": [
+                "start",
+                "--inspect"
+            ]
+        },
+        {
+            "name": "Debug CRA in Browser",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}/src",
+            "sourceMapPathOverrides": {
+              "webpack:///./src/*": "${webRoot}/*"
+            }
+        }, {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch (pre-built) File Server",
+            "program": "${workspaceFolder}/server/build/index.js"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Browser+Node",
+            "configurations": ["Debug CRA in Browser", "Launch (pre-built) File Server", "Launch CRA Web Server"]
+        }
+    ]
+}

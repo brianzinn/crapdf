@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+      "declaration": true,
+      "jsx": "react",
+      "target": "es6",
+      "module": "commonjs",
+      "noImplicitAny": true,
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true,
+      "sourceMap": true,
+      "outDir": "build"
+    },
+    "include":  [
+      "src"
+    ],
+    "types": ["typePatches", "node", "webpack-env"]
+  }
+  

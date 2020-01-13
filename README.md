@@ -6,10 +6,32 @@ The goals accomplished here are that we can use CRA and HMR to build our website
 Tips:
 1. Puppeteer versioning is tied to chrome versions (https://github.com/puppeteer/puppeteer/releases)
 2. If you use docker, the alpine builds will change chromium versions.  You can otherwise stick to an 'edge' release.
-3. Use the `dumpio` in `LaunchOptions` to log.  You may want to turn this off in dev, but is super helpful if you run into any rendering issues.
+3. Use the `dumpio` in `LaunchOptions` to log.  You may want to turn this off in prod, but is super helpful if you run into any rendering issues.
 
+
+### Using Docker
+```bash
+$ docker build --rm -t crapdf .
+...
+Successfully built 0.......1
+Successfully tagged crapdf:latest
+```
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+### Without docker
+You need to deploy a nodejs server.  To test start the /server in a separate window as HMR.
+```bash
+$ cd server
+$ yarn build
+$ yarn start
+```
+
+With postman or in another terminal, you can download the PDF from the `server`:
+```bash
+$ curl -X POST localhost:5001/entity/1 -o entity-1.pdf
+$ curl -X POST localhost:5001/entity/2 -o entity-2.pdf
+```
 
 ### `yarn start`
 

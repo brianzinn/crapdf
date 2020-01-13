@@ -1,0 +1,32 @@
+{
+  "name": "crapdf-server",
+  "version": "0.0.1",
+  "description": "express pdf server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node_modules/.bin/tsc --build && node ./build/index.js",
+    "build": "node_modules/.bin/tsc --build",
+    "test": "echo 'no tests on server yet'"
+  },
+  "author": "Brian Zinn",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "concurrently": "^4.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.0",
+    "puppeteer": "1.12.2",
+    "typescript": "^3.5.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.5",
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^4.17.0",
+    "@types/node-fetch": "^2.5.0",
+    "@types/puppeteer": "^1.19.0",
+    "@types/webpack-env": "^1.14.0",
+    "tslint": "^5.18.0"
+  }
+}
