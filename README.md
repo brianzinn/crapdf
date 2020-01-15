@@ -1,13 +1,15 @@
 # CRA-PDF Create React App - Portable Document Format
-This is how you generate PDFs from React with less limitations.  Full access to SVG and custom React component renders and you don't need to build new components to render PDF.
+Generate PDFs from React.  Full access to browser functionality including SVG while leveraging existing React components and libraries, so you don't need to create new components to generate PDFs.  ie: using the same code as your existing website (instead of adding new PDF specific components like `<View ...><Text ...></View`)
 
-The goals accomplished here are that we can use CRA and HMR to build our website as usual.  There is an Express server running in Node that creates and returns the PDF.
+The goals accomplished here are that we can use CRA and HMR to build our website as usual.  There is an Express server running in Node that creates and returns the PDF using existing webpages.
 
 Tips:
 1. Puppeteer versioning is tied to chrome versions (https://github.com/puppeteer/puppeteer/releases)
-2. If you use docker, the alpine builds will change chromium versions.  You can otherwise stick to an 'edge' release.
-3. Use the `dumpio` in `LaunchOptions` to log.  You may want to turn this off in prod, but is super helpful if you run into any rendering issues.
+2. If you use docker the alpine builds will change.  You can otherwise stick to versions for deterministic builds.
+3. Use the `dumpio` in `LaunchOptions` to transfer browser logs to server logs.  You may want to turn this off in prod, but is super helpful if you run into any rendering issues.
+4. Page breaks can be managed somewhat with CSS print media rules (https://www.w3schools.com/cssref/pr_print_pagebi.asp), so you can control page breaks after/before content, but also try to keep sections together (ie: `{page-break-inside: avoid;}`).
 
+The server-side project runs on Node express server and renders your React pages as PDFs, so docker is just an optional container.
 
 ### Using Docker
 ```bash
@@ -20,7 +22,7 @@ Successfully tagged crapdf:latest
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ### Without docker
-You need to deploy a nodejs server.  To test start the /server in a separate window as HMR.
+You need to deploy a nodejs server.  To test start the /server in a separate window (can be set to use your development React server for PDF generationi).
 ```bash
 $ cd server
 $ yarn build
