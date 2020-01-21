@@ -98,7 +98,7 @@ const server = express()
        *
        * @param url
        */
-      const getBinaryPDF = async (url: string): Promise<Buffer> => {
+      const getBuffer = async (url: string, target: string): Promise<Buffer> => {
 
         console.log('calling puppeteer for url:', url);
 
@@ -143,18 +143,34 @@ const server = express()
             console.log('exists: ' + selectorExists);
           }
 
-          // await page.emulateMedia('screen'); // actually we want to use @media print CSS
-          // https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagepdfoptions
-          return await page.pdf({
-            format: 'A4',
-            printBackground: true,
-            margin: {
-              top: '48px',
-              bottom: '48px',
-              left: '42px',
-              right: '42px'
-            }
-          });
+          switch (target) {
+            case 'png':
+              // declare a variable with an ElementHandle
+              // const element = await page.$('div.loaded');
+              // element.screenshot(...)
+              return await page.screenshot({
+                clip: {
+                  x: 0,
+                  y: 0,
+                  width: 180,
+                  height: 80
+                },
+                type: 'png' // 'jpeg' also supported
+              });
+            default:
+              // await page.emulateMedia('screen'); // actually we want to use @media print CSS
+              // https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagepdfoptions
+              return await page.pdf({
+                format: 'A4',
+                printBackground: true,
+                margin: {
+                  top: '48px',
+                  bottom: '48px',
+                  left: '42px',
+                  right: '42px'
+                }
+              });
+          }
         } finally {
           await browser.close();
         }
@@ -169,13 +185,18 @@ const server = express()
       const websiteUrl = `http://localhost:${puppeteerPort}${req.url}`;
 
       // If you want to return other formats besides PDF (ie: screenshot, markdown, JSON, etc.) can be done here:
-      const pdfBuffer = await getBinaryPDF(websiteUrl);
+      const target = (req.body ? req.body.target : undefined) || 'pdf';
+      const resultBuffer = await getBuffer(websiteUrl, target);
+
+      const contentType = (target === 'pdf')
+        ? 'application/pdf'
+        : 'image/png';
 
       res.set({
-        'Content-Length': String(pdfBuffer.length),
-        'Content-Type': 'application/pdf'
+        'Content-Length': String(resultBuffer.length),
+        'Content-Type': contentType
       });
-      res.send(pdfBuffer);
+      res.send(resultBuffer);
 })
 /**
  * This is where the CRA3 website is deployed in production.  Server matching files (ie: resources)

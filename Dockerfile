@@ -1,4 +1,4 @@
-FROM node:10-alpine
+FROM node:13-alpine
 RUN apk --no-cache add ca-certificates
 
 RUN apk update && apk upgrade && \
@@ -26,7 +26,13 @@ RUN yarn install && \
 
 RUN yarn --cwd ./server install && \
     yarn --cwd ./server build
-    
+
+# Allows port 5051 to be publicly available (express server)
+EXPOSE 5051
+
+# Set default user
+USER node
+
 # Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 # Adding entrypoint to Kubernetes manifest
