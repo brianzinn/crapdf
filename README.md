@@ -33,6 +33,8 @@ With postman or in another terminal, you can download the PDF from the `server`:
 ```bash
 $ curl -X POST localhost:5001/entity/1 -o entity-1.pdf
 $ curl -X POST localhost:5001/entity/2 -o entity-2.pdf
+
+curl -d '{"target":"png"}' -H "Content-Type: application/json" -X POST localhost:5001/stars/2 -o stars-2.png
 ```
 
 ### `yarn start`
