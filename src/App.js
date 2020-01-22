@@ -7,10 +7,12 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        
-        Try <a href="/entity/1" style={{color: 'white'}}>a real page</a>
-        <br/>
       </header>
+      <div className="App-body">
+        <div>Sample Pages:</div>
+        <a href="/entity/1" className="App-link">entity (recharts)</a><br />
+        <a href="/stars/2.5" className="App-link">stars (material-UI)</a>
+      </div>
     </div>
   );
 }

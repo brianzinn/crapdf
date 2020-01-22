@@ -37,6 +37,13 @@ $ curl -X POST localhost:5001/entity/2 -o entity-2.pdf
 curl -d '{"target":"png"}' -H "Content-Type: application/json" -X POST localhost:5001/stars/2 -o stars-2.png
 ```
 
+You can also generate and have downloadable images of your webpage (or parts of webpage via CSS selectors).  These can be used for other PDF generation tools (ie: @react-pdf/renderer) or integrating your React site/graphs into programs like Slack (bot kit builder), MS Teams, etc.
+
+Here we specify that we want a PNG image in our request, otherwise a PDF is generated.
+```
+$ curl -d '{"target":"png"}' -H "Content-Type: application/json" -X POST localhost:5001/stars/2 -o stars-4.png
+```
+
 ### `yarn start`
 
 Runs the app in the development mode.<br />

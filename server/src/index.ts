@@ -11,6 +11,12 @@ const ENV_FILE = path.join(__dirname, '../..', '.env');
 console.log('env file:', ENV_FILE);
 config({ path: ENV_FILE });
 
+function PromiseTimeout(delayms: number) {
+  return new Promise((resolve, reject) => {
+      setTimeout(resolve, delayms);
+  });
+}
+
 function waitForNetworkIdle(page: puppeteer.Page, timeout: number, maxInflightRequests = 0) {
   function onRequestStarted() {
     ++inflight;
@@ -72,6 +78,10 @@ const server = express()
                 id: entityId,
                 name: `name-${entityId}`
             };
+
+            const seconds = 2;
+            console.log(`sleeping for ${seconds} seconds.`);
+            await PromiseTimeout(seconds * 1000);
 
             // we write here in the log.  A failing render does so in minified js, so output can be used
             // to generate failing tests.

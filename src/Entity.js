@@ -75,21 +75,23 @@ export default class App extends Component {
     const { entity, error } = this.state;
 
     return (
-      <div className="App">
-        <h2>{this.state.id}</h2>
-        {(entity === undefined && error === undefined) &&
-                <strong>loading ...</strong>
-        }
-        {error &&
-            <div className='loaded'>
-                <span><strong>error:</strong>{error}</span>
-            </div>
-        }
-        {entity &&
-            <div className='loaded' data-testid="entity">
-                <strong>Name:</strong> { entity.name }
-            </div>
-        }
+      <div>
+        <div className="App-content">
+          <h2>{this.state.id}</h2>
+          {(entity === undefined && error === undefined) &&
+                  <strong>loading ...</strong>
+          }
+          {error &&
+              <div className='loaded'>
+                  <span><strong>error:</strong>{error}</span>
+              </div>
+          }
+          {entity &&
+              <div className='loaded' data-testid="entity">
+                  <strong>Name:</strong> { entity.name }
+              </div>
+          }
+        </div>
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
         </header>
