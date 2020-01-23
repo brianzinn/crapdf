@@ -33,38 +33,43 @@ With postman or in another terminal, you can download the PDF from the `server`:
 ```bash
 $ curl -X POST localhost:5001/entity/1 -o entity-1.pdf
 $ curl -X POST localhost:5001/entity/2 -o entity-2.pdf
-
-curl -d '{"target":"png"}' -H "Content-Type: application/json" -X POST localhost:5001/stars/2 -o stars-2.png
 ```
+
+> Sample PDF generation output: [entity-1.pdf](generated/entity-1.pdf)
 
 You can also generate and have downloadable images of your webpage (or parts of webpage via CSS selectors).  These can be used for other PDF generation tools (ie: @react-pdf/renderer) or integrating your React site/graphs into programs like Slack (bot kit builder), MS Teams, etc.
 
-Here we specify that we want a PNG image in our request, otherwise a PDF is generated.
+Here we specify that we want a PNG image in our request by POSTing additional parameters, otherwise a PDF is generated.
 ```
-$ curl -d '{"target":"png"}' -H "Content-Type: application/json" -X POST localhost:5001/stars/2 -o stars-4.png
+$ curl -d '{"target":"png"}' -H "Content-Type: application/json" -X POST localhost:5001/stars/3 -o stars-3.png
 ```
+Image output of Material-UI labs `rating` component:
+![3 stars using Rating component](generated/stars-3.png)
+
+Instead of opening a URL, as in the code samples you can also quickly render components without serving them over a website.  You can go this way if you are just, for example, rendering a recharts component using [ReactDOMServer](https://reactjs.org/docs/react-dom-server.html).
+```javascript
+import ReactDOMServer from 'react-dom/server';
+
+const browser = await puppeteer.launch({
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+})
+try {
+    const page = await browser.newPage()
+    const html = ReactDOMServer.renderToStaticMarkup(<YourComponent/>);
+    await page.setContent(html);
+    const pdf = await page.pdf({ format: 'A4' })
+    return pdf
+} finally {
+    await browser.close()
+}
+```
+
 
 ### `yarn start`
 
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+In the `server` directory you also need to run `yarn start` in a second console.  This will let you work with the running CRA website simultaneously with the express server that generates the images/PDFs.  To be clear, you will run `yart start` twice, once from the root directory and once from the `server` directory during development.
 
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-
+On a production environment, you only need to run the `express` server in node with the built CRA website.
