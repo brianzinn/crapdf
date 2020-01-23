@@ -21,6 +21,7 @@ Here we specify that we want a PNG image in our request by POSTing additional pa
 $ curl -d '{"target":"png"}' -H "Content-Type: application/json" -X POST localhost:5001/stars/3 -o stars-3.png
 ```
 Image output of Material-UI labs `rating` component:
+
 ![3 stars using Rating component](generated/stars-3.png)
 
 ### ReactDOMServer
